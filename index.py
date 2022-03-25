@@ -13,7 +13,7 @@ def home():
         return render_template('index.html')
 
 @app.route('/about')
-def test():
+def about():
     return "THÔNG TIN NHÓM"
 
 if __name__ == "__main__":
