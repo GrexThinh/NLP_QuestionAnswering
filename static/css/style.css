@@ -1,0 +1,12 @@
+h1 {
+    color: red;
+    text-align: center;
+}
+
+h2 {
+    color: blue;
+}
+
+input[type="text"] {
+    width: 500px;
+}
