@@ -12,9 +12,9 @@ def home():
     else:
         return render_template('index.html')
 
-@app.route('/test')
+@app.route('/about')
 def test():
-    return "HELLO MY TEST!"
+    return "THÔNG TIN NHÓM"
 
 if __name__ == "__main__":
     app.run(debug=True)
