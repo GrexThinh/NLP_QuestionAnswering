@@ -7,8 +7,10 @@ app=Flask("app")
 def home():
     if request.method=="POST":
         question=request.form["question"]
-        ans=answerQuestionMachine(question)
-        return render_template('index.html', content=ans)
+        print(question)
+        # answer=answerQuestionMachine(question)
+        answer=123
+        return render_template('index.html', ques=question, ans=answer)
     else:
         return render_template('index.html')
 
