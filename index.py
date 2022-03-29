@@ -8,8 +8,7 @@ def home():
     if request.method=="POST":
         question=request.form["question"]
         print(question)
-        # answer=answerQuestionMachine(question)
-        answer=123
+        answer=answerQuestionMachine(question)
         return render_template('index.html', ques=question, ans=answer)
     else:
         return render_template('index.html')
