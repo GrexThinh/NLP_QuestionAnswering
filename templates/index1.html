@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://kit.fontawesome.com/376af8290d.js" crossorigin="anonymous"></script>
+    <title>QA Web</title>
+</head>
+<body>
+    <div class="welcome">
+        <p>Welcome</p>
+        <div class="child-welcome">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="#">Logo></a></div>
+            <ul class="menu">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="box-left">
+                <div class="input-box question-box">
+                    <form method="post" id="QA-form">
+                        <input type="text" name="question" placeholder="ex: Who's the richest in the world?" required id="question-input"></input>
+                        <input type="submit" value="Go"></input>
+                    </form>
+                    <span class="title">Question: </span>
+                </div>
+                <div class="input-box">
+                    <textarea disabled>{{content}}</textarea>
+                    <span class="title">Answer: </span>
+                </div>
+            </div>
+            <div class="box-right">
+                <textarea disabled id="ans">{{content1}}</textarea>
+            </div>
+        </div>  
+    </header>
+    
+    <script src="/static/js/main.js"></script>
+
+</body>
+</html>
