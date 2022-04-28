@@ -8,9 +8,9 @@ def main():
     if request.method=="POST":
         question=request.form["question"]
         ans=answerQuestionMachine(question)
-        return render_template('index1.html', content=ans)
+        return render_template('index1.html', content=ans, ques=question)
     else:
-        return render_template('index1.html',content = "Hello World", content1 = "Goodbye")
+        return render_template('index1.html',content = "", content1 = "Goodbye")
 
 @app.route('/about')
 def about():

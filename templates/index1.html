@@ -19,7 +19,7 @@
     </div>
     <header>
         <div class="navbar">
-            <div class="logo"><a href="#">Logo></a></div>
+            <div class="logo"><a href="#">Question Answering WEB</a></div>
             <ul class="menu">
                 <li><a href="/home">Home</a></li>
                 <li><a href="/about">About</a></li>
@@ -29,7 +29,7 @@
             <div class="box-left">
                 <div class="input-box question-box">
                     <form method="post" id="QA-form">
-                        <input type="text" name="question" placeholder="ex: Who's the richest in the world?" required id="question-input"></input>
+                        <input type="text" name="question" required id="question-input" value="{{ ques }}"></input>
                         <input type="submit" value="Go"></input>
                     </form>
                     <span class="title">Question: </span>
