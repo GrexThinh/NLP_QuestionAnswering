@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from test import answerQuestionMachine
+from QA import answerQuestionMachine
 
 app=Flask("app")
 
@@ -7,14 +7,14 @@ app=Flask("app")
 def main():
     if request.method=="POST":
         question=request.form["question"]
-        ans=answerQuestionMachine(question)
-        return render_template('index1.html', content=ans, ques=question)
+        answer, context=answerQuestionMachine(question)
+        return render_template('home.html', ans=answer, ques=question, context=context)
     else:
-        return render_template('index1.html',content = "", content1 = "")
+        return render_template('home.html', ans = "", context = "")
 
 @app.route('/about')
 def about():
-    return "THÔNG TIN NHÓM"
+    return render_template("about.html")
 
 @app.route('/home')
 def home():

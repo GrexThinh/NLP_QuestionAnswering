@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/home.css">
     <script src="https://kit.fontawesome.com/376af8290d.js" crossorigin="anonymous"></script>
     <title>QA Web</title>
 </head>
@@ -27,12 +27,13 @@
                     <span class="title">Question: </span>
                 </div>
                 <div class="input-box">
-                    <textarea disabled>{{content}}</textarea>
+                    <textarea disabled>{{ans["answer"]}}</textarea>
                     <span class="title">Answer: </span>
                 </div>
             </div>
             <div class="box-right">
-                <textarea disabled id="ans">{{content1}}</textarea>
+                <textarea disabled id="ans">{{context}}</textarea>
+                <textarea disabled>Score: {{ans["score"]}} Start: {{ans["start"]}} End: {{ans["end"]}}</textarea>
             </div>
         </div>  
     </header>
