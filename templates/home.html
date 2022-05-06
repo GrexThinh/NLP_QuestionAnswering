@@ -32,8 +32,15 @@
                 </div>
             </div>
             <div class="box-right">
-                <textarea disabled id="ans">{{context}}</textarea>
-                <textarea disabled>Score: {{ans["score"]}} Start: {{ans["start"]}} End: {{ans["end"]}}</textarea>
+                <div class="input-box context-box">
+                    <textarea disabled id="ans">{{context}}</textarea>
+                    <span class="title">Context: </span>
+                </div> 
+                <div class="input-box info-box">
+                    <textarea disabled>Score: {{ans["score"]}}
+Start: {{ans["start"]}} 
+End: {{ans["end"]}}</textarea>
+                </div> 
             </div>
         </div>  
     </header>
