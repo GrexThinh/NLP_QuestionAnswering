@@ -10,7 +10,7 @@ def main():
         ans=answerQuestionMachine(question)
         return render_template('index1.html', content=ans, ques=question)
     else:
-        return render_template('index1.html',content = "", content1 = "Goodbye")
+        return render_template('index1.html',content = "", content1 = "")
 
 @app.route('/about')
 def about():
