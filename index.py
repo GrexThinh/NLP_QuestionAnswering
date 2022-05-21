@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from QA_1 import extractAnswer
+from QA import extractAnswer
 
 app=Flask("app")
 
@@ -11,9 +11,9 @@ def main():
 
         results, page, answer=extractAnswer(question)
 
-        return render_template('home1.html', question=question, results=results, page=page, answer=answer)
+        return render_template('home.html', question=question, results=results, page=page, answer=answer)
     else:
-        return render_template('home1.html', question="", results="", page="", answer="")
+        return render_template('home.html', question="", results="", page="", answer="")
 
 @app.route('/about')
 def about():

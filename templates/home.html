@@ -4,235 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/home.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script src="https://kit.fontawesome.com/376af8290d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/home.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <title>QA Web</title>
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <div class="logo"><a href="#">Question Answering WEB</a></div>
-            <ul class="menu">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/about">About</a></li>
-            </ul>
-        </div>
-        <div class="content" id="10001a">
-            <div class="box-left" id="10001b">
-                <div class="input-box question-box">
-                    <form method="post" id="QA-form">
-                        <input type="text" name="question" required id="question-input" value="{{ question }}"></input>
-                
-                        <input type="submit" value="Go" onclick="onClick()"></input>
-                    </form>
-                    <span class="title">Question: </span>
-                </div>
-                <div class="input-box">
-                    <textarea disabled>{{answer}}</textarea>
-                    <span class="title">Answer: </span>
-                </div>
-            </div>
-            <div class="box-right" id="10001c">
-                <div class="input-box context-box">
-                    <textarea disabled id="ans">{{results}}</textarea>
-                    <span class="title">Results: </span>
-                    <textarea disabled id="ans">{{page}}</textarea>
-                    <span class="title">Top Wikipedia Page: </span>
-                </div> 
-            </div>
-        </div> 
-        <div class="container" id="10001d">
-
-            <div class="h1Container">
-          
-              <div class="cube h1 w1 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w1 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w1 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w2 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w2 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w2 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w3 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w3 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h1 w3 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-            </div>
-            
-            <div class="h2Container">
-          
-              <div class="cube h2 w1 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w1 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w1 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w2 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w2 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w2 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w3 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w3 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h2 w3 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-            </div>
-            
-            <div class="h3Container">
-          
-              <div class="cube h3 w1 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w1 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w1 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w2 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w2 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w2 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w3 l1">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w3 l2">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-          
-              <div class="cube h3 w3 l3">
-                <div class="face top"></div>
-                <div class="face left"></div>
-                <div class="face right"></div>
-              </div>
-            </div>
-            
-          </div> 
-    </header>
-    
-    <script src="/static/js/main.js"></script>
-    <script>
-        let box_left = document.getElementById("10001b");
-        let box_right = document.getElementById("10001c");
-        let _content = document.getElementById('10001a');
-
-        function onClick(){
-            box_left.style.display = "none";
-            box_right.style.display = "none";
-
-            let div_loading = document.getElementById('10001d');
-            div_loading.classList.add("active");
-        }
-        
-
-    </script>
+    <div class="header">
+        <h1 class="Title">Question Answering WEB</h1>
+        <ul class="menu">
+            <a href="/about"><i class="far fa-address-card"></i> About</a>
+        </ul>
+    </div>
+    <div class="question">
+        <h3 class="title">Question: </h3>
+        <form method="post">
+            <input id="text" type="text" name="question" required id="question-input" value="{{ question }}"></input>
+            <!-- <input id="search" type="submit" value="Go" onclick="onClick()"></input> -->
+            <button type="submit" value="Go" onclick="onClick()">Search</button>
+        </form>
+    </div>
+    <div class="answer">
+        <h3 class="title">Answer: </h3>
+        <!-- <input id="text" type="text" >{{answer}}</input> -->
+        <input disabled id="text" value="{{answer}}"></input>
+    </div>
+    <div class="top-page">
+        <h3 class="title">Top of Search: </h3>
+        <!-- <input id="text" type="text" >{{page}}</input> -->
+        <input disabled id="text" value="{{page}}"></input>
+    </div> 
 </body>
 </html>
