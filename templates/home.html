@@ -22,25 +22,23 @@
             <div class="box-left" id="10001b">
                 <div class="input-box question-box">
                     <form method="post" id="QA-form">
-                        <input type="text" name="question" required id="question-input" value="{{ ques }}"></input>
+                        <input type="text" name="question" required id="question-input" value="{{ question }}"></input>
+                
                         <input type="submit" value="Go" onclick="onClick()"></input>
                     </form>
                     <span class="title">Question: </span>
                 </div>
                 <div class="input-box">
-                    <textarea disabled>{{ans["answer"]}}</textarea>
+                    <textarea disabled>{{answer}}</textarea>
                     <span class="title">Answer: </span>
                 </div>
             </div>
             <div class="box-right" id="10001c">
                 <div class="input-box context-box">
-                    <textarea disabled id="ans">{{ans["text"]}}</textarea>
-                    <span class="title">Context: </span>
-                </div> 
-                <div class="input-box info-box">
-                    <textarea disabled>Score: {{ans["score"]}}
-Start: {{ans["start"]}} 
-End: {{ans["end"]}}</textarea>
+                    <textarea disabled id="ans">{{results}}</textarea>
+                    <span class="title">Results: </span>
+                    <textarea disabled id="ans">{{page}}</textarea>
+                    <span class="title">Top Wikipedia Page: </span>
                 </div> 
             </div>
         </div> 

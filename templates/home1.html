@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/home1.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <title>QA Web</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="Title">Question Answering WEB</h1>
+        <ul class="menu">
+            <a href="/about"><i class="far fa-address-card"></i> About</a>
+        </ul>
+    </div>
+    <div class="question">
+        <h3 class="title">Question: </h3>
+        <form method="post">
+            <input id="text" type="text" name="question" required id="question-input" value="{{ question }}"></input>
+            <!-- <input id="search" type="submit" value="Go" onclick="onClick()"></input> -->
+            <button type="submit" value="Go" onclick="onClick()">Search</button>
+        </form>
+    </div>
+    <div class="answer">
+        <h3 class="title">Answer: </h3>
+        <!-- <input id="text" type="text" >{{answer}}</input> -->
+        <input disabled id="text" value="{{answer}}"></input>
+    </div>
+    <div class="top-page">
+        <h3 class="title">Top of Search: </h3>
+        <!-- <input id="text" type="text" >{{page}}</input> -->
+        <input disabled id="text" value="{{page}}"></input>
+    </div> 
+</body>
+</html>

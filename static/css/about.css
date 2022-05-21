@@ -1,22 +1,38 @@
-*{
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-size: 30px;
-}
+} */
+
+
 
 body{
-    height: 100vh;
+    /* height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    font-size: 30px;
     background: linear-gradient(135deg, #24ff72 10%, #2196f3 100%);
 }
 
+.header .menu {
+    text-align: right;
+    margin-right: 50px;
+    list-style: none;
+}
+
 h1 {
-    margin-bottom: 30px;
     text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
 }
 
 .member {

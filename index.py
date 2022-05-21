@@ -1,25 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from QA import answerQuestionMachine, DocumentRetrieval, QueryProcessor, PassageRetrieval, AnswerExtractor
-
-import concurrent.futures
-import itertools
-import operator
-import re
-import os
-import spacy
-
-import requests
-import wikipedia
-from gensim.summarization.bm25 import BM25
-from transformers import AutoTokenizer, AutoModelForQuestionAnswering, QuestionAnsweringPipeline
-
-SPACY_MODEL = os.environ.get('SPACY_MODEL', 'en_core_web_sm')
-QA_MODEL = os.environ.get('QA_MODEL', 'distilbert-base-cased-distilled-squad')
-nlp = spacy.load(SPACY_MODEL, disable=['ner', 'parser', 'textcat'])
-query_processor = QueryProcessor(nlp)
-document_retriever = DocumentRetrieval()
-passage_retriever = PassageRetrieval(nlp)
-answer_extractor = AnswerExtractor(QA_MODEL, QA_MODEL)
+from QA_1 import extractAnswer
 
 app=Flask("app")
 
@@ -27,17 +7,13 @@ app=Flask("app")
 def main():
     if request.method=="POST":
         question=request.form["question"]
-        """
-        answer, context=answerQuestionMachine(question)"""
-        query = query_processor.generate_query(question)
-        docs = document_retriever.search(query)
-        passage_retriever.fit(docs)
-        passages = passage_retriever.most_similar(question)
-        answers = answer_extractor.extract(question, passages)
+        print(question)
 
-        return render_template('home.html', ans=answers[0], ques=question)
+        results, page, answer=extractAnswer(question)
+
+        return render_template('home1.html', question=question, results=results, page=page, answer=answer)
     else:
-        return render_template('home.html', ans = "", context = "")
+        return render_template('home1.html', question="", results="", page="", answer="")
 
 @app.route('/about')
 def about():
