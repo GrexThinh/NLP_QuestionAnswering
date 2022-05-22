@@ -1,98 +1,101 @@
+import wikipedia as wiki
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering
 import torch
-import wikipedia as wiki
 from collections import OrderedDict
 
-class DocumentReader:
-    def __init__(self, pretrained_model_name_or_path='bert-large-uncased'):
-        self.READER_PATH = pretrained_model_name_or_path
-        self.tokenizer = AutoTokenizer.from_pretrained(self.READER_PATH)
-        self.model = AutoModelForQuestionAnswering.from_pretrained(self.READER_PATH)
-        self.max_len = self.model.config.max_position_embeddings
+class DocumentRetrieval:
+    # Init 
+    def __init__(self):
+        pass
+    # Extract context
+    def retrieveContext(self, question):
+        print("Retrieving context...")
+        pages = wiki.search(question)
+        print(len(pages), " page(s) found: ", pages)
+        top_page = pages[0]
+        print("Return top page '", top_page,"' as context.")
+        context = wiki.page(title=top_page, auto_suggest=False).content
+        return top_page, context
+
+
+class AnswerExtraction:
+    # Init
+    def __init__(self, model_name,):
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+        self.max_len = 510  #self.model.config.max_position_embeddings
         self.chunked = False
-
-    def tokenize(self, question, text):
-        self.inputs = self.tokenizer.encode_plus(question, text, add_special_tokens=True, return_tensors="pt")
+    # Some essential methods
+    def __tokenize__(self, question, context):
+        self.inputs = self.tokenizer.encode_plus(question, context, add_special_tokens=True, return_tensors="pt")
         self.input_ids = self.inputs["input_ids"].tolist()[0]
-
         if len(self.input_ids) > self.max_len:
-            self.inputs = self.chunkify()
+            self.inputs = self.__chunkify__()
             self.chunked = True
 
-    def chunkify(self):
-        """ 
-        Break up a long article into chunks that fit within the max token
-        requirement for that Transformer model. 
-
-        Calls to BERT / RoBERTa / ALBERT require the following format:
-        [CLS] question tokens [SEP] context tokens [SEP].
-        """
-
-        # create question mask based on token_type_ids
-        # value is 0 for question tokens, 1 for context tokens
+    def __chunkify__(self):
         qmask = self.inputs['token_type_ids'].lt(1)
         qt = torch.masked_select(self.inputs['input_ids'], qmask)
-        chunk_size = self.max_len - qt.size()[0] - 1 # the "-1" accounts for
-        # having to add an ending [SEP] token to the end
-
-        # create a dict of dicts; each sub-dict mimics the structure of pre-chunked model input
+        chunk_size = self.max_len - qt.size()[0]
         chunked_input = OrderedDict()
         for k,v in self.inputs.items():
             q = torch.masked_select(v, qmask)
             c = torch.masked_select(v, ~qmask)
             chunks = torch.split(c, chunk_size)
-            
             for i, chunk in enumerate(chunks):
                 if i not in chunked_input:
                     chunked_input[i] = {}
-
                 thing = torch.cat((q, chunk))
                 if i != len(chunks)-1:
                     if k == 'input_ids':
                         thing = torch.cat((thing, torch.tensor([102])))
                     else:
                         thing = torch.cat((thing, torch.tensor([1])))
-
                 chunked_input[i][k] = torch.unsqueeze(thing, dim=0)
         return chunked_input
 
-    def get_answer(self):
+    def __convert_ids_to_string__(self, input_ids):
+        return self.tokenizer.convert_tokens_to_string(self.tokenizer.convert_ids_to_tokens(input_ids))
+    
+    # Extract answer
+    def extractAnswer(self, question, context):
+        print("Extracting answer...")
+        self.__tokenize__(question, context)
         if self.chunked:
-            # answer = ''
             for k, chunk in self.inputs.items():
                 answer_start_scores, answer_end_scores = self.model(**chunk, return_dict=False)
-
                 answer_start = torch.argmax(answer_start_scores)
                 answer_end = torch.argmax(answer_end_scores) + 1
-
-                ans = self.convert_ids_to_string(chunk['input_ids'][0][answer_start:answer_end])
-                if ans != '[CLS]':
-                    # answer += ans + " / "
-                    return ans
+                answer = self.__convert_ids_to_string__(chunk['input_ids'][0][answer_start:answer_end])
+                if answer != '[CLS]':
+                    return answer
         else:
             answer_start_scores, answer_end_scores = self.model(**self.inputs)
+            answer_start = torch.argmax(answer_start_scores)
+            answer_end = torch.argmax(answer_end_scores) + 1
+            return self.__convert_ids_to_string__(self.inputs['input_ids'][0][answer_start:answer_end])
 
-            answer_start = torch.argmax(answer_start_scores)  # get the most likely beginning of answer with the argmax of the score
-            answer_end = torch.argmax(answer_end_scores) + 1  # get the most likely end of answer with the argmax of the score
-        
-            return self.convert_ids_to_string(self.inputs['input_ids'][0][
-                                              answer_start:answer_end])
 
-    def convert_ids_to_string(self, input_ids):
-        return self.tokenizer.convert_tokens_to_string(self.tokenizer.convert_ids_to_tokens(input_ids))
+class QASystem:
+    # Init QA system
+    def __init__(self, documentRetrieval, answerExtraction):
+        self.documentRetrieval = documentRetrieval      # Document retrieval process
+        self.answerExtraction = answerExtraction        # Question extraction process
+    # Answer the input question
+    def answer(self, question):
+        print(" # QUESTION: ", question)
+        top_page, context = self.documentRetrieval.retrieveContext(question)
+        answer = self.answerExtraction.extractAnswer(question, context)
+        print(" # ANSWER: ", answer)
+        return answer, top_page
 
-reader = DocumentReader("deepset/bert-base-cased-squad2") 
+# TEST
 
-def extractAnswer(question):
+# question = "What is Machine learning ?"
 
-    print(f"Question: {question}")
-    results = wiki.search(question)
-    page = wiki.page(results[0])
-    print(f"Top wiki result: {page}")
+# docRtv = DocumentRetrieval()
+# ansExt = AnswerExtraction("deepset/bert-base-cased-squad2")
 
-    text = page.content
-
-    reader.tokenize(question, text)
-    answer=reader.get_answer()
-    print(f"Answer: {answer}")
-    return results, page, answer
+# qa = QASystem(docRtv, ansExt)
+# answer, top_page = qa.answer(question)
+# print(answer)

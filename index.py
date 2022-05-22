@@ -1,27 +1,23 @@
 from flask import Flask, render_template, request, url_for, redirect
-from QA import extractAnswer
+from QA import DocumentRetrieval, AnswerExtraction, QASystem
 
-app=Flask("app")
+# Init QA system
+documentRetrieval = DocumentRetrieval()
+answerExtraction = AnswerExtraction("deepset/bert-base-cased-squad2")
+qaSystem = QASystem(documentRetrieval, answerExtraction)
+
+# Init server
+app=Flask("app", template_folder='templates')
 
 @app.route('/', methods=["POST", "GET"])
 def main():
     if request.method=="POST":
         question=request.form["question"]
-        print(question)
-
-        results, page, answer=extractAnswer(question)
-
-        return render_template('home.html', question=question, results=results, page=page, answer=answer)
+        answer, top_page = qaSystem.answer(question)
+        return render_template('home.html', question=question, top_page=top_page, answer=answer)
     else:
-        return render_template('home.html', question="", results="", page="", answer="")
+        return render_template('home.html', question="", top_page="", answer="")
 
-@app.route('/about')
-def about():
-    return render_template("about.html")
-
-@app.route('/home')
-def home():
-    return redirect(url_for('main'))
-
+# Run server
 if __name__ == "__main__":
     app.run(debug=True)
